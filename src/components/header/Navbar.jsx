@@ -101,6 +101,12 @@ const Navbar = () => {
           >
             Reports
           </NavLink>
+          <NavLink
+            to="/user-records"
+            className="block py-2 px-4 hover:bg-blue-700"
+          >
+            User Records
+          </NavLink>
        
           {!currentUser && (
             <NavLink to="/login" className="block py-2 px-4 hover:bg-blue-700">

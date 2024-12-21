@@ -15,6 +15,7 @@ import ChatAdminPage from './pages/ChatAdminPage';
 import ChatUserPage from './pages/ChatUserPage';
 import RegistrationPage from './pages/RegistrationPage';
 import ReportsPage from './pages/ReportsPage';
+import UserRecordsPage from './pages/UserRecordsPage';
 
 
 
@@ -34,6 +35,7 @@ const App = () => (
         <Route path="admin-chat" element={<ChatAdminPage />} />
         <Route path="registrations" element={<RegistrationPage />} />
         <Route path="reports" element={<ReportsPage />} />
+        <Route path="user-records" element={<UserRecordsPage />} />
         <Route path="login" element={<Auth />} />
         <Route path="*" element={<NotFound />} />
       </Route>
