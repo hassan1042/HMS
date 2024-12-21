@@ -1,10 +1,8 @@
 // src/services/authService.js
 
-import {  createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState, createContext, useContext } from "react";
 import { auth } from "../firebase/Firebase";
-
-
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
 
 // Context for providing auth state across the app
 const AuthContext = createContext();
