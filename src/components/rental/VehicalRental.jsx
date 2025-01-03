@@ -17,7 +17,7 @@ const VehicleRentalPage = () => {
   return (
     <div className="p-6">
       <h1 className="text-3xl mb-6">Available Vehicles</h1>
-      <div className="flex w-1/2">
+      <div className="flex w-full ">
         {vehicles.map(vehicle => (
           <VehicleCard key={vehicle.id} vehicle={vehicle} />
         ))}

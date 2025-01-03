@@ -7,18 +7,21 @@ const FoodRegistration = () => {
   const [name, setName] = useState('');
   const [category, setCategory] = useState('');
   const [price, setPrice] = useState('');
+  const [desc, setDesc] = useState('');
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const available = true;
 
   const handleAddFood = async (e) => {
     e.preventDefault();
-    if (name && category && price && image) {
+    if (name && category && price && image && desc) {
       setLoading(true);
-      await addFoodItem(name, category, price, image, available,);
+      await addFoodItem(name, category, price, image, available, desc);
+      alert('Food Item Added Successfully');
       setLoading(false);
       setName('');
       setCategory('');
+      setDesc('');
       setPrice('');
       setImage(null);
     }
@@ -31,8 +34,9 @@ const FoodRegistration = () => {
   <input className={inputStyles} type="text" placeholder="Food Name" value={name} onChange={(e) => setName(e.target.value)} required />
   {/* <input className={inputStyles} type="text" placeholder="Category" value={category} onChange={(e) => setCategory(e.target.value)} required /> */}
   <input className={inputStyles} type="number" placeholder="Price" value={price} onChange={(e) => setPrice(e.target.value)} required />
+  <input className={inputStyles} type="text" placeholder="Description" value={desc} onChange={(e) => setDesc(e.target.value)} required />
   {
-    [ 'Full Course', 'Lunch', 'Breakfast', 'Beverages'].map((cat) => (
+    [ 'Full Course', 'Lunch', 'Breakfast', ].map((cat) => (
       <div className='space-x-4'>
       <label htmlFor="category"  >{cat}
       <input  className={`${inputStyles} ms-1`} type="radio" name='category' value={cat} onChange={(e) => setCategory(e.target.value)} required/>

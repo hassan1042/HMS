@@ -3,7 +3,7 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { db, storage } from '../firebase/Firebase';
 
 // Add Room
-export const addRoom = async (name, description, imageFile, available, price) => {
+export const addRoom = async (name, description, imageFile, available, price, beds) => {
   try {
     // Upload Image to Firebase Storage
     const imageRef = ref(storage, `rooms/${imageFile.name}`);
@@ -17,6 +17,7 @@ export const addRoom = async (name, description, imageFile, available, price) =>
       imageUrl,
       available,
       price,
+      beds,
     });
   } catch (error) {
     console.error('Error adding room:', error);

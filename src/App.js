@@ -16,6 +16,7 @@ import ChatUserPage from './pages/ChatUserPage';
 import RegistrationPage from './pages/RegistrationPage';
 import ReportsPage from './pages/ReportsPage';
 import UserRecordsPage from './pages/UserRecordsPage';
+import AdminRecordsPage from './pages/AdminRecordsPage';
 
 
 
@@ -36,6 +37,7 @@ const App = () => (
         <Route path="registrations" element={<RegistrationPage />} />
         <Route path="reports" element={<ReportsPage />} />
         <Route path="user-records" element={<UserRecordsPage />} />
+        <Route path="admin-records" element={<AdminRecordsPage />} />
         <Route path="login" element={<Auth />} />
         <Route path="*" element={<NotFound />} />
       </Route>

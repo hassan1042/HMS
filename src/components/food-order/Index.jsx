@@ -6,10 +6,11 @@ import FoodCard from './FoodCard';
 import { auth } from '../../firebase/Firebase';
 import { fetchFoodItems } from '../../services/foodRegService';
 import { inputStyles } from '../registrations/FoodRegistration';
+import { Timestamp } from 'firebase/firestore';
 
 
 
-const categories = ['All', 'Full Course', 'Lunch', 'Breakfast', 'Beverages'];
+const categories = ['All', 'Full Course', 'Lunch', 'Breakfast',];
 
 const FoodOrderMain = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -44,11 +45,13 @@ const FoodOrderMain = () => {
 
     const orderData = {
       userId: auth.currentUser.uid,
-      userName: formData.name,
+      name: formData.name,
       contact: formData.contact,
       address: formData.address,
       items,
       status:"pending",
+          applyDate: Timestamp.fromDate(new Date()),
+      
     };
 
     await saveFoodOrder(orderData);

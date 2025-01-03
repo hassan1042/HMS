@@ -3,7 +3,7 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { db, storage } from '../firebase/Firebase';
 
 // Add Food Item
-export const addFoodItem = async (name, category, price, imageFile, available) => {
+export const addFoodItem = async (name, category, price, imageFile, available, desc) => {
   try {
     // Upload Image to Firebase Storage
     const imageRef = ref(storage, `food/${imageFile.name}`);
@@ -17,6 +17,7 @@ export const addFoodItem = async (name, category, price, imageFile, available) =
       price,
       imageUrl,
       available,
+      desc,
     });
   } catch (error) {
     console.error('Error adding food item:', error);

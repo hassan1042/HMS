@@ -29,18 +29,31 @@ const ParkingCard = ({ vehicle,  }) => {
 
   return (
     <div className="max-w-sm mx-auto p-4 border rounded-lg shadow-lg bg-white transform transition duration-300 hover:shadow-xl hover:scale-105">
-    <div className="overflow-hidden rounded-lg">
-      <img 
-        src={vehicle.imageUrl} 
-        alt={vehicle.name} 
-        className="w-full h-40 object-cover transition-transform duration-500 hover:scale-110" 
-      />
-    </div>
-    <div className="text-center mt-4 space-y-2">
-      <h3 className="text-xl font-bold text-gray-800">{vehicle.name}</h3>
-      <p className="text-gray-600">Description: <span className="font-semibold">{vehicle.category}</span></p>
-      <p className="text-gray-600">Rate per day: <span className="text-green-600 font-semibold">${vehicle.rate}</span></p>
-    </div>
+    <div className="relative">
+        <img
+          src={vehicle.imageUrl}
+          alt={vehicle.name}
+          className="w-full h-48 object-cover"
+        />
+      </div>
+      <div className="max-md:p-2 p-4">
+      <div className="flex justify-between items-center font-semibold text-gray-800 text-lg lg:text-xl 2xl:text-3xl">
+      <div className="   capitalize">{vehicle.name}</div>
+      <div title="Per day" className="">${vehicle.rate}</div>
+      </div>
+      <p className="text-gray-600 italic py-3 text-center">{vehicle.category}</p>
+      </div>
+
+
+
+
+
+
+
+
+
+
+
     <div className="space-y-3 mt-4">
       <div className="flex justify-between items-center">
         <label className="text-gray-600 font-medium">Start Date:</label>
@@ -49,6 +62,7 @@ const ParkingCard = ({ vehicle,  }) => {
           value={startDate} 
           onChange={(e) => setStartDate(e.target.value)} 
           className="border rounded p-1 transition duration-200 focus:ring-2 focus:ring-blue-300" 
+          max={endDate}
         />
       </div>
       <div className="flex justify-between items-center">
@@ -58,6 +72,7 @@ const ParkingCard = ({ vehicle,  }) => {
           value={endDate} 
           onChange={(e) => setEndDate(e.target.value)} 
           className="border rounded p-1 transition duration-200 focus:ring-2 focus:ring-blue-300" 
+          min={startDate}
         />
       </div>
     </div>

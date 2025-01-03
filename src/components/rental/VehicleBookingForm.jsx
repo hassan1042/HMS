@@ -7,6 +7,7 @@ import { inputStyles } from '../registrations/FoodRegistration';
 const VehicleBooking = ({ vehicle }) => {
   const [name, setName] = useState('');
   const [contact, setContact] = useState('');
+  const [cnic, setCnic] = useState('');
   const [startDate, setStartDate] = useState(''); 
   const [endDate, setEndDate] = useState('');
   const [totalRate, setTotalRate] = useState(0);
@@ -31,15 +32,16 @@ const handleTotalRate = () => {
       startDate,
       endDate,
       totalRate,
+      cnic,
       status : 'pending',
       available: true,
     };
     await addVehicleBooking(bookingData);
-    alert('Vehicle booked successfully');
+    alert('Booking requested successfully');
   };
 
   return (
-    <form onSubmit={handleBooking} className="mt-4  flex flex-col justify-center items-center">
+    <form onSubmit={handleBooking} className="mt-4  flex flex-col justify-center items-center w-full">
       <input
         type="text"
         value={name}
@@ -54,6 +56,13 @@ const handleTotalRate = () => {
         placeholder="Contact Number"
         className={`w-full p-2 mb-2 border rounded ${inputStyles}`}
       />
+       <input
+        type="number"
+        value={cnic}
+        onChange={(e) => setCnic(e.target.value)}
+        placeholder="Your Cnic no hyphens(-)"
+        className={`w-full p-2 mb-2 border rounded ${inputStyles}`}
+      />
       <input
         type="date"
         value={startDate}
@@ -62,6 +71,7 @@ const handleTotalRate = () => {
         //   calculateTotalRate();
         }}
         className={`w-full p-2 mb-2 border rounded ${inputStyles} `}
+        max={endDate}
       />
       <input
         type="date"
@@ -70,13 +80,13 @@ const handleTotalRate = () => {
           setEndDate(e.target.value);
         }}
         className={`w-full p-2 mb-2 border rounded ${inputStyles} `}
-
+       min={startDate}
       />
       <div>
         <p className='font-bold'>Total: ${totalRate}</p>
       </div>
       <button type="submit" className="bg-green-600 hover:bg-green-800 transition-all duration-200 text-white p-2 rounded w-full">
-        Confirm Booking
+        Apply Booking
       </button>
     </form>
   );

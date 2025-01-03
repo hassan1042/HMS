@@ -11,7 +11,6 @@ import SubmitTestimonialForm from "./SubmitTesimonial";
 const HomeMain = () => {
   return (
     <div>
-      <h1 className="text-2xl">Welcome to Hotel Management System</h1>;
       <HeroSection />
       <AboutUsSection />
       <RoomsSection />

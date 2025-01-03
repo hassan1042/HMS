@@ -10,7 +10,7 @@ const VehicleCard = ({ vehicle }) => {
 
   const handleBookNow = () => {
     if (auth.currentUser) {
-      setShowForm(true);
+      setShowForm(!showForm);
     } else {
       alert('Please log in to apply for vehicle rental');
     }
@@ -19,12 +19,12 @@ const VehicleCard = ({ vehicle }) => {
   const toggleAvailability = () => setIsAvailable(prev => !prev);
 
   return (
-    <div className=" p-4">
-    <CardRate name={vehicle.name} rate={vehicle.price} image={vehicle.imageUrl} handleSubmit={handleBookNow}/>
+    <div className="p-2 md:p-4 w-full  flex relative flex-wrap">
+    <CardRate vehicle={vehicle} handleSubmit={handleBookNow}/>
           {showForm && <VehicleBooking vehicle={vehicle} />}
       
       {/* Admin-only availability toggle (Apply restrictions later) */}
-      <button onClick={toggleAvailability} className="bg-gray-600 text-white p-2 mt-2 rounded">
+      <button onClick={toggleAvailability} className="bg-gray-600 text-white p-2 mt-2 rounded absolute -bottom-5 right-[35%] ">
         {isAvailable ? 'Set as Unavailable' : 'Set as Available'}
       </button>
     </div>

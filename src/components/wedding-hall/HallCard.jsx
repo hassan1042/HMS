@@ -1,28 +1,49 @@
-import React from 'react'
+import React from 'react';
 
+const HallCard = ({ hall }) => {
+  const { name, description, pp, offers, imageUrl } = hall;
 
-function HallCard({image, name , desc, ppp, }) {
-  
   return (
-/* From Uiverse.io by ElSombrero2 */ 
-<div  className="relative max-w-xs mx-auto bg-white shadow-lg rounded-lg overflow-hidden transform transition duration-300 hover:scale-105 hover:shadow-2xl hover:bg-gray-50 cursor-pointer">
-<div className="content">
-  <img
-    className="w-full h-40 object-cover mb-4 transition-transform duration-300 hover:scale-110"
-    src={image}
-    alt={name}
-  />
-  <div className="p-4 flex flex-col justify-between h-full">
-    <p className="text-center text-2xl font-semibold mb-2 text-gray-800">{name}</p>
-    <p className="italic text-justify px-1 text-gray-600">{desc}</p>
-    <p className="text-start text-xl px-2 font-bold mt-4 text-indigo-600">${ppp} <span className="font-medium text-gray-500">PP</span></p>
-  </div>
-</div>
-{/* Optional Glow Animation */}
-<div className="absolute inset-0 bg-indigo-200 opacity-0 hover:opacity-25 rounded-lg transition duration-300"></div>
-</div>
-// </div>
-  )
-}
+    <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
+      <div>
+        <img
+          src={imageUrl}
+          alt={name}
+          className="h-48 w-full object-cover"
+        />
+      </div>
+      <div className="p-4">
+        <h2 className="text-xl font-bold text-gray-900">{name}</h2>
+        <p className="text-gray-700 mt-2">{description}</p>
+        <p className="text-gray-900 font-semibold mt-4">
+          Rate per Person: <span className="text-blue-600">${pp}</span>
+        </p>
+        <h3 className="text-lg font-semibold text-gray-800 mt-6">Offers:</h3>
+        {offers && offers.length > 0 ? (
+          <ul className="mt-4 space-y-4">
+            {offers.map((offer, index) => (
+              <li
+                key={index}
+                className="p-4 border rounded-md shadow-sm bg-blue-50"
+              >
+                <h4 className="font-bold text-blue-700">{offer.title}</h4>
+                <p className="text-gray-600 mt-1">{offer.description}</p>
+                <p className="text-gray-800 mt-1">
+                  <strong>Price:</strong>{' '}
+                  <span className="text-green-600">${offer.price}</span>
+                </p>
+                {/* <p className="text-gray-600 mt-1">
+                  <strong>Valid Until:</strong> {offer.validity}
+                </p> */}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-gray-600 mt-4">No offers available at the moment.</p>
+        )}
+      </div>
+    </div>
+  );
+};
 
-export default HallCard
+export default HallCard;

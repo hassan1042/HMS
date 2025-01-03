@@ -5,11 +5,14 @@ import SubmitButton from '../common/button/SubmitButton';
 import { deleteDoc, doc } from 'firebase/firestore';
 import { db } from '../../firebase/Firebase';
 import { MdDelete } from "react-icons/md";
+import { useAuth } from '../../contexts/authContext';
 
 const GallerySection = () => {
   const [images, setImages] = useState([]);
   const [allImages, setAllImages] = useState([]);
   const [loading, setLoading] = useState(false);
+    const { currentUser } = useAuth();
+  
 
   useEffect(() => {
     const allGalleryImages = async () => {
@@ -46,15 +49,20 @@ const GallerySection = () => {
         {allImages.map((img, index) => (
           <div key={index} className="w-64 h-64 bg-gray-200 rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition duration-500">
             <img src={img.imageUrl} alt="Gallery" className="w-full h-full object-cover" />
+     {currentUser && currentUser.uid === "6HVNgEkgDfXnco34ujwrVfpmwbx2" && (
+            
         <div
          className='font-bold italic absolute top-5 right-5 cursor-pointer text-2xl text-pink-400'
          onClick={() => handleDeletePic(img.id)}
          ><MdDelete />
          </div>
+     )}
                      </div>
         ))}
       </div>
      }
+     {currentUser && currentUser.uid === "6HVNgEkgDfXnco34ujwrVfpmwbx2" && (
+
      <form onSubmit={handleAddPic} action="">
      Add image to gallery here
      {/* <input
@@ -71,6 +79,7 @@ const GallerySection = () => {
          {/* <button type='submit'>Add</button> */}
          <SubmitButton callToAction={"Add Picture"} />
      </form>
+     )}
     </div>
   </section>
 };

@@ -8,12 +8,15 @@ const RentalRegistration = () => {
   const [desc, setDesc] = useState('');
   const [price, setPrice] = useState('');
   const [image, setImage] = useState(null);
+  const [loading, setLoading] = useState(false);
   const available = true;
 
   const handleAddVehicle = async (e) => {
     e.preventDefault();
     if (name && desc && price && image) {
+      setLoading(true);
       await addVehicle(name, desc, price, image, available);
+      setLoading(false);
       alert('Vehicle added successfully!');
       setName('');
       setDesc('');
@@ -29,7 +32,7 @@ const RentalRegistration = () => {
       <input className= {inputStyles} type="number" placeholder="Price per Day" value={price} onChange={(e) => setPrice(e.target.value)} required />
       <input type="file" onChange={(e) => setImage(e.target.files[0])} required />
       {/* <button type="submit">Add Vehicle</button> */}
-      <SubmitButton callToAction={'Add Vehicle'} />
+      <SubmitButton callToAction={loading ? 'Adding Vehicle...' : 'Add Vehicle'} />
     </form>
   );
 };

@@ -16,6 +16,7 @@ const WeddingHallCard = ({ hall }) => {
     startDate: '',
     endDate: '',
     people: '',
+    cnic: '',
   });
   const handleTotalRate = () => {
     const start = new Date(bookingData.startDate);
@@ -55,10 +56,10 @@ const WeddingHallCard = ({ hall }) => {
   return (
     <div className="p-4 bg-white mx-auto  flex justify-center items-center flex-col w-full">
     
-      <HallCard image={hall.imageUrl} name={hall.name} desc={hall.description} ppp={hall.pp}/>
+      <HallCard hall={hall}/>
     <BookButton text={"Book Now"} setIsBooking={setIsBooking} isBooking={isBooking}/>     
       {isBooking && (
-        <form onSubmit={handleBookingSubmit} className="mt-4 flex flex-col justify-center items-center space-y-3">
+        <form onSubmit={handleBookingSubmit} className="mt-4 flex flex-col justify-center items-center space-y-3 w-full">
           <input
           className={inputStyles}
             type="text"
@@ -79,6 +80,13 @@ const WeddingHallCard = ({ hall }) => {
             placeholder="Contact Number"
             required
             onChange={(e) => setBookingData({...bookingData, contact: e.target.value})}
+          />
+            <input
+          className={`${inputStyles}  `}
+            type="number"
+            placeholder="Your CNIC no hyphens"
+            required
+            onChange={(e) => setBookingData({...bookingData, cnic: e.target.value})}
           />
           <input
             type="date"
