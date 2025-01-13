@@ -8,7 +8,8 @@ function Rooms({ bookingFields, bookings, activeTab }) {
   };
 
   return (
-    <table className="w-full border-collapse border border-gray-200 text-center">
+    <div className="w-full overflow-x-auto element">
+    <table className="w-full border-collapse border border-gray-200 text-center capitalize">
       <thead>
         <tr>
           {bookingFields[activeTab].map((field) => (
@@ -22,7 +23,7 @@ function Rooms({ bookingFields, bookings, activeTab }) {
           <th className="border border-gray-300 px-4 py-2">Download</th>
         </tr>
       </thead>
-      <tbody className="w-full">
+      <tbody className="w-full max-sm:text-sm">
         {bookings.map((booking, index) => (
           <tr className="w-full" key={index}>
             {bookingFields[activeTab].map((field) => (
@@ -45,6 +46,7 @@ function Rooms({ bookingFields, bookings, activeTab }) {
         ))}
       </tbody>
     </table>
+    </div>
   );
 }
 

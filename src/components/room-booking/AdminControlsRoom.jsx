@@ -4,13 +4,17 @@ import {
   sendRoomBookingNotification,
   updateRoomOrderStatus,
 } from "../../services/roomBookingService";
+import Loader from "../common/loader/Loader";
 
 function AdminControlsRoom() {
   const [rooms, setRooms] = useState([]);
+  const[loading, setLoading] = useState(true);
+
   useEffect(() => {
     const fetchRoomInfo = async () => {
       const appliedRooms = await getRoomBookings();
       setRooms(appliedRooms);
+      setLoading(false);
     };
     fetchRoomInfo();
   }, []);
@@ -49,6 +53,7 @@ function AdminControlsRoom() {
     );
   };
   return (
+    loading ? <Loader msg={"Fetching Room Booking Notifications"} /> :
     <div className="p-6 space-y-6 flex flex-wrap justify-between items-center ">
     {rooms.map((room, i) => (
       room.status !== "rejected" && room.status !== "checkedOut" && (

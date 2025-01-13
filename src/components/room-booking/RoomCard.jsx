@@ -53,7 +53,7 @@ const RoomCard = ({ room }) => {
       
 
         <div className="bg-blue-200 flex w-fit mx-auto" onClick={handleBookNow}>
-          <SubmitButton callToAction={"Book Now"}></SubmitButton>
+          <SubmitButton callToAction={"Book Now"} />
         </div>
       {showForm && <RoomBooking room={room} />}
     </div>

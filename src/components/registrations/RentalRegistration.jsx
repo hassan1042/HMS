@@ -26,10 +26,10 @@ const RentalRegistration = () => {
   };
 
   return (
-    <form onSubmit={handleAddVehicle} className="rental-registration-form flex justify-center items-center space-x-4 flex-wrap">
-      <input className= {inputStyles} type="text" placeholder="Vehicle Name" value={name} onChange={(e) => setName(e.target.value)} required />
-      <input className= {inputStyles} type="text" placeholder="Description" value={desc} onChange={(e) => setDesc(e.target.value)} required />
-      <input className= {inputStyles} type="number" placeholder="Price per Day" value={price} onChange={(e) => setPrice(e.target.value)} required />
+    <form onSubmit={handleAddVehicle} className="flex justify-center items-center space-x-4 flex-wrap max-md:space-y-3">
+      <input className={`${inputStyles} max-md:flex-1`} type="text" placeholder="Vehicle Name" value={name} onChange={(e) => setName(e.target.value)} required />
+      <input className={`${inputStyles} max-md:flex-1`} type="text" placeholder="Description" value={desc} onChange={(e) => setDesc(e.target.value)} required />
+      <input className={`${inputStyles} max-md:flex-1`} type="number" placeholder="Price per Day" value={price} onChange={(e) => setPrice(e.target.value)} required />
       <input type="file" onChange={(e) => setImage(e.target.files[0])} required />
       {/* <button type="submit">Add Vehicle</button> */}
       <SubmitButton callToAction={loading ? 'Adding Vehicle...' : 'Add Vehicle'} />

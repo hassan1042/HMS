@@ -1,10 +1,14 @@
 import React from 'react';
+import Loader from '../common/loader/Loader';
 
-function UserControlsRoom({roomNotifications, handleDelete}) {
+function UserControlsRoom({roomNotifications, handleDelete, loading}) {
 
   return (
     <div className="container mx-auto p-4 flex flex-wrap justify-between items-center">
-    {roomNotifications.length === 0 ? (
+    {
+    loading.room ? <Loader msg={"Fetching room Updates for you"} /> : 
+      
+      roomNotifications.length === 0 ? (
       <p className="text-gray-500 italic">No Notifications yet (Room)</p>
     ) : (
       roomNotifications.map((room, i) => (

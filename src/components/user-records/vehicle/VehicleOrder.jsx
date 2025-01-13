@@ -9,6 +9,7 @@ function VehicleOrder({bookingFields, bookings, activeTab, }) {
      };
       
   return (
+    <div className="w-full overflow-x-auto element">
     <table className="w-full border-collapse border border-gray-200 text-center">
             <thead>
               <tr>
@@ -21,7 +22,7 @@ function VehicleOrder({bookingFields, bookings, activeTab, }) {
               </tr>
             </thead>
             <tbody
-            className='w-full'
+            className='w-full max-sm:text-sm'
             >
               {bookings.map((booking, index) => (
                 <tr className='w-full' key={index}>
@@ -46,6 +47,7 @@ function VehicleOrder({bookingFields, bookings, activeTab, }) {
               ))}
             </tbody>
           </table>
+          </div>
   )
 }
 

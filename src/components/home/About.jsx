@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase/Firebase';
+import ImgLoader from '../common/loader/ImgLoader';
 
 const AboutUsSection = () => {
     const [bg, setBg] = useState(null);
+    const[loading, setLoading] = useState(true);
     useEffect(() => {
       const fetchAboutImage = async () => {
         try {
@@ -11,7 +13,7 @@ const AboutUsSection = () => {
           const heroBg = snapshot.docs.map(doc => doc.data()); // Assuming `url` field contains the image link
           // if (heroBg.length > 0) {
             setBg(heroBg[0].about); // Set the first URL if it exists
-            console.log("about hero", heroBg)
+            setLoading(false);
           // }
         } catch (error) {
           console.error('Error fetching about image:', error);
@@ -22,11 +24,12 @@ const AboutUsSection = () => {
     }, []);
     
  return ( 
- <section className="py-16 bg-gray-50 text-gray-800">
+  loading ? <ImgLoader/> :
+ <section className="py-4 lg:py-16 bg-gray-50 text-gray-800 max-lg:mt-5">
     <div className="container mx-auto px-8 lg:flex lg:items-center lg:justify-between">
       <div className="lg:w-1/2">
-        <h2 className="text-3xl font-bold mb-4">About <i> Magnum Hotel</i></h2>
-        <p className="text-lg mb-6">
+        <h2 className="text-xl md:text-2xl lg:text-3xl font-bold mb-4">About <span> Magnum Hotel</span></h2>
+        <p className="max-md:text-md max-md:text-balance text-lg mb-6">
           Experience unmatched luxury and comfort at The Magnum. From the moment you step through our doors, you'll be immersed in elegance and refinement.
         </p>
         <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-2 rounded-lg transition duration-300">

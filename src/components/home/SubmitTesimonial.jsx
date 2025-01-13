@@ -41,7 +41,7 @@ const SubmitTestimonialForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="p-6 bg-white rounded-lg shadow-lg">
-      <h2 className="text-2xl font-bold mb-4">Submit Your Testimonial</h2>
+      <h2 className="text-xl md:text-2xl lg:text-3xl text-center font-bold mb-4">Share your thoughts</h2>
    <div
 className="flex justify-between items-center flex-wrap mb-4"
    >
@@ -59,18 +59,7 @@ className="flex justify-between items-center flex-wrap mb-4"
         onChange={(e) => setReview(e.target.value)}
         className="w-[70%] p-2  border rounded-lg"
       />
-     {/* <label htmlFor="image"
-     className="w-[15%] text-gray-500"
-     >
-     Your picture
-     <input
-        type="file"
-        accept="image/*"
-        onChange={(e) => setImage(e.target.files[0])}
-        className="mb-4"
-      />
-     </label> */}
-   </div>
+     </div>
    
     <div
     className="text-center"

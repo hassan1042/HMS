@@ -1,23 +1,30 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import "./home.css";
-import HeroSection from "./Hero";
-import AboutUsSection from "./About";
-import RoomsSection from "./Rooms";
-import AmenitiesSection from "./Amenities";
-import GallerySection from "./Gellery";
-import TestimonialsSection from "./Testimonials";
-import SubmitTestimonialForm from "./SubmitTesimonial";
+import Loader from "../common/loader/Loader";
+
+
+const Hero = lazy(() => import('./Hero'));
+const About = lazy(() => import('./About'));
+const Rooms = lazy(() => import('./Rooms'));
+const Amenity = lazy(() => import('./Amenities'));
+const Gallery = lazy(() => import('./Gellery'));
+const Reviews = lazy(() => import('./Testimonials'));
+const SubmitReview = lazy(() => import('./SubmitTesimonial'));
 
 const HomeMain = () => {
   return (
     <div>
-      <HeroSection />
-      <AboutUsSection />
-      <RoomsSection />
-      <AmenitiesSection />
-      <GallerySection />
-      <TestimonialsSection />
-      <SubmitTestimonialForm />
+    <Suspense fallback={
+      <Loader msg={"Home..."}/>
+    }>
+      <Hero />
+      <About />
+      <Rooms />
+      <Amenity />
+      <Gallery />
+      <Reviews />
+      <SubmitReview />
+      </Suspense>
     </div>
   );
 };

@@ -1,23 +1,30 @@
 import React, { useEffect, useState } from "react";
 import WeddingHallCard from "./WeddingHallCard";
 import { fetchHalls } from "../../services/hallRegService";
+import Loader from "../common/loader/Loader";
 
 const WeddingHalls = () => {
   const [halls, setHalls] = useState([]);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchAllHalls = async () => {
       const allHalls = await fetchHalls();
       setHalls(allHalls);
+      setLoading(false);
     };
     fetchAllHalls();
   }, []);
   return (
-    <div className="container mx-auto p-4">
-      <h2 className="text-2xl font-bold mb-4">Wedding Halls</h2>
-      <div className="flex justify-center items-center space-x-4 w-full ">
-        {halls.map((hall) => (
+    <div className="md:container mx-auto py-4 md:p-4 ">
+    <div className="flex justify-center items-center space-x-4 w-full  mx-auto  flex-wrap">
+     {
+      loading ? <Loader msg={"Fetching Halls"} /> : 
+      <div className="flex flex-wrap ">
+       {halls.map((hall) => (
           <WeddingHallCard key={hall.id} hall={hall} />
         ))}
+       </div>
+     }
       </div>
     </div>
   );

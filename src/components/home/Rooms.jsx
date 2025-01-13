@@ -27,9 +27,9 @@ const RoomsSection = () => {
   };
 
   return (
-    <section className="py-16 bg-white text-gray-800">
-      <div className="container mx-auto px-8">
-        <h2 className="text-3xl font-bold mb-8 text-center">Our Rooms</h2>
+    <section className="py-4 max-md:mt-5 lg:py-16 bg-white text-gray-800">
+      <div className="md:container mx-auto px-2 nd:px-4 lg:px-8">
+        <h2 className="text-xl md:text-2xl lg:text-3xl font-bold mb-8 text-center">Our Rooms</h2>
         <div className="grid  md:grid-cols-3 gap-8">
           {rooms &&
             rooms.map((room) => (
@@ -42,7 +42,7 @@ const RoomsSection = () => {
                   alt={room.name}
                   className="w-full h-56 object-cover"
                 />
-                <div className="p-6 flex flex-col justify-normal bg-red-100 h-full">
+                <div className="p-6 flex flex-col justify-normal h-full">
                 <div className="flex justify-between items-center h-[10%]">
                 <h3 className="text-xl font-semibold mb-2">{room.name}</h3>
                    <p
@@ -55,7 +55,7 @@ const RoomsSection = () => {
                            </span>
                          </p>
                 </div>
-                  <p className="text-gray-600 mb-4 max-md:h-[25%] h-[35%] text-center italic">{room.description}</p>
+                  <p className="text-gray-600 mb-4 max-md:h-[35%] h-[35%] text-center italic">{room.description}</p>
                   <div className="flex justify-between items-center h-[10%]">
                     <span className="text-lg font-bold text-yellow-500">
                       ${room.price}/day

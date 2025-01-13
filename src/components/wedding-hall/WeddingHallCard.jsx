@@ -1,39 +1,44 @@
-import React, { useState } from 'react';
-import { addDoc, collection, serverTimestamp, Timestamp } from 'firebase/firestore';
-import { db } from '../../firebase/Firebase';
-import { useAuth } from '../../contexts/authContext';
-import HallCard from './HallCard';
-import BookButton from '../common/button/BookButton';
-import {inputStyles} from '../registrations/FoodRegistration'
+import React, { useState } from "react";
+import {
+  addDoc,
+  collection,
+  serverTimestamp,
+  Timestamp,
+} from "firebase/firestore";
+import { db } from "../../firebase/Firebase";
+import { useAuth } from "../../contexts/authContext";
+import HallCard from "./HallCard";
+import BookButton from "../common/button/BookButton";
+import BookingForm from "../common/forms/BookingForm";
 
 const WeddingHallCard = ({ hall }) => {
   const { currentUser } = useAuth();
   const [isBooking, setIsBooking] = useState(false);
   const [totalRate, setTotalRate] = useState(0);
-  const [bookingData, setBookingData] = useState({
-    name: '',
-    contact: '',
-    startDate: '',
-    endDate: '',
-    people: '',
-    cnic: '',
-  });
+  const [name, setName] = useState('');
+  const [contact,  setContact] = useState('');
+  const [startDate,  setStartDate] = useState('');
+  const [endDate,  setEndDate] = useState('');
+  const [cnic,  setCnic] = useState('');
+ 
   const handleTotalRate = () => {
-    const start = new Date(bookingData.startDate);
-    const end = new Date(bookingData.endDate);
+    const start = new Date(startDate);
+    const end = new Date(endDate);
     const days = (end - start) / (1000 * 60 * 60 * 24);
     const rate = days * hall.pp;
-    console.log(hall.pp)
     setTotalRate(rate);
-    console.log(rate)
-}
+  };
 
-  const handleBookingSubmit = async (e) => {
+  const handleBooking = async (e) => {
     e.preventDefault();
     if (!currentUser) return alert("Please log in to book");
     handleTotalRate();
     const bookingInfo = {
-      ...bookingData,
+      name,
+      cnic, 
+      contact, 
+      startDate,
+      endDate,
       userId: currentUser.uid,
       hallName: hall.name,
       hallId: hall.id,
@@ -44,7 +49,7 @@ const WeddingHallCard = ({ hall }) => {
     };
 
     try {
-      await addDoc(collection(db, 'wedding-hall-bookings'), bookingInfo);
+      await addDoc(collection(db, "wedding-hall-bookings"), bookingInfo);
       setIsBooking(false);
       alert("Booking request sent!");
     } catch (error) {
@@ -52,59 +57,29 @@ const WeddingHallCard = ({ hall }) => {
     }
   };
 
-
   return (
-    <div className="p-4 bg-white mx-auto  flex justify-center items-center flex-col w-full">
-    
-      <HallCard hall={hall}/>
-    <BookButton text={"Book Now"} setIsBooking={setIsBooking} isBooking={isBooking}/>     
+    <div className="p-4 mx-auto   flex justify-center items-center flex-col w-full md:w-[45%] lg:w-[30%] 2xl:w-[23%]">
+      <HallCard hall={hall} />
+      <BookButton
+        text={"Book Now"}
+        setIsBooking={setIsBooking}
+        isBooking={isBooking}
+      />
       {isBooking && (
-        <form onSubmit={handleBookingSubmit} className="mt-4 flex flex-col justify-center items-center space-y-3 w-full">
-          <input
-          className={inputStyles}
-            type="text"
-            placeholder="Name..."
-            required
-            onChange={(e) => setBookingData({...bookingData, name: e.target.value})}
-          />
-           <input
-          className={inputStyles}
-            type="number"
-            placeholder="Number of People"
-            required
-            onChange={(e) => setBookingData({...bookingData, people: e.target.value})}
-          />
-          <input
-          className={`${inputStyles}  `}
-            type="tel"
-            placeholder="Contact Number"
-            required
-            onChange={(e) => setBookingData({...bookingData, contact: e.target.value})}
-          />
-            <input
-          className={`${inputStyles}  `}
-            type="number"
-            placeholder="Your CNIC no hyphens"
-            required
-            onChange={(e) => setBookingData({...bookingData, cnic: e.target.value})}
-          />
-          <input
-            type="date"
-            className={`${inputStyles} w-full `}
-            placeholder="Start Date"
-            required
-            onChange={(e) => setBookingData({...bookingData, startDate: e.target.value})}
-          />
-          <input
-            type="date"
-            className={`${inputStyles} w-full `}
-            placeholder="End Date"
-            required
-            onChange={(e) => setBookingData({...bookingData, endDate: e.target.value})}
-          />
-        <p onClick={handleTotalRate} className='font-bold cursor-pointer'>Total: ${totalRate}</p>
-          <button type="submit" className="mt-4 bg-green-500 hover:bg-green-800 transition-all duration-200 text-white px-6 py-2 rounded-xl">Submit</button>
-        </form>
+        <BookingForm
+      handleBooking={handleBooking}
+      name={name}
+      setName={setName}
+      contact={contact}
+      setContact={setContact}
+      cnic={cnic}
+      setCnic={setCnic}
+      startDate={startDate}
+      setStartDate={setStartDate}
+      endDate={endDate}
+      setEndDate={setEndDate}
+      totalRate={totalRate}
+    />
       )}
     </div>
   );

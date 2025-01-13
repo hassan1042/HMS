@@ -18,8 +18,8 @@ const Navbar = () => {
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      alert("logout successful");
       navigate("/");
+      setIsOpen(false)
     } catch (error) {
       alert(`logout failed error: ${error}`);
       throw error;
@@ -42,7 +42,7 @@ const Navbar = () => {
           {isOpen ? <HiX size={30} /> : <HiMenuAlt3 size={30} />}
         </button>
 
-        {/* Links for larger screens */}
+        {/*Big screen nav */}
         <LgNav
           isOpen={isOpen}
           currentUser={currentUser}
@@ -57,6 +57,7 @@ const Navbar = () => {
         currentUser={currentUser}
         logo={logo}
         handleLogout={handleLogout}
+        setIsOpen={setIsOpen}
       />
     </header>
   );

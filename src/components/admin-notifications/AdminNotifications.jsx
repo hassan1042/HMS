@@ -6,6 +6,7 @@ import AdminControlsHall from "../wedding-hall/AdminControlsHall";
 
 function AdminNotifications() {
   const [activeTab, setActiveTab] = useState("food-orders");
+  
   const tabs = [
     {
       order: 'food-orders',
@@ -23,21 +24,20 @@ function AdminNotifications() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-4">Your Orders</h1>
-       <div className="flex space-x-4 mb-6">
+       <div className="flex space-x-4 mb-6 max-md:space-y-3 flex-wrap">
 
       {
-        tabs.map((but, i) => {
+        tabs.map((tab, i) => {
          return <button
          key={i}
-          onClick={() => setActiveTab(but.order)}
+          onClick={() => setActiveTab(tab.order)}
           className={`px-4 py-2 rounded ${
-            activeTab === but.order
+            activeTab === tab.order
               ? "bg-blue-500 text-white"
               : "bg-gray-200"
           }`}
         >
-         {but.order}
+         {tab.order}
         </button>
         })
       }

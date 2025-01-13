@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { getRentalVehicles, sendRentalNotification, updateRentalOrderStatus } from '../../services/vehicleRentalService'
+import Loader from '../common/loader/Loader';
 
 function AdminControls() {
     const [appliedVehicles , setAppliedVehicles] = useState([]);
+    const[loading, setLoading] = useState(true);
+
     useEffect(() => {
         const fetchVehicleRentalInfo = async () => {
             const rentalVehicles = await getRentalVehicles();
              setAppliedVehicles(rentalVehicles);
+             setLoading(false);
         }
         fetchVehicleRentalInfo();
     }, []);
@@ -29,6 +33,7 @@ function AdminControls() {
         );
       };
   return (
+    loading ? <Loader msg={"Fetching Rental Notifications"} /> :
     <div className="space-y-6 p-6 flex justify-between items-center flex-wrap">
     {appliedVehicles &&
       appliedVehicles.map((vehicle, i) => (
@@ -37,7 +42,7 @@ function AdminControls() {
             key={i}
             className="p-5 border-l-4 border-blue-500 bg-white rounded-lg shadow-lg transition transform hover:scale-105 hover:shadow-xl"
           >
-            <h3 className="text-xl font-semibold text-gray-800 mb-3">Vehicle Booking</h3>
+            <h3 className="text-xl font-semibold text-gray-800 mb-3">Booking from <span className='italic capitalize'>{vehicle.name}</span></h3>
             <div className="text-gray-600 mb-4">
               <p className="flex items-center space-x-4">
                 <span className="font-medium text-blue-700">Vehicle Name:</span>

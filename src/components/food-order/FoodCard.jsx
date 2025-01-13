@@ -1,5 +1,3 @@
-// src/components/FoodCard.js
-
 import React, { useState } from 'react';
 
 const FoodCard = ({ foodItem, onQuantityChange }) => {
@@ -25,7 +23,7 @@ const FoodCard = ({ foodItem, onQuantityChange }) => {
     <img className='rounded-full h-20 w-20' src={foodItem.imageUrl} alt="" />
     <h3 className="text-2xl font-bold text-gray-800 mb-2 capitalize">{foodItem.name}</h3>
     </div>
-    <p className="text-gray-600 italic mb-4 py-2" >{foodItem.description}</p>
+    <p className="text-gray-600 italic mb-4 py-2" >{foodItem.desc}</p>
 
 
     <div className="flex items-center justify-center mt-4">
@@ -49,7 +47,7 @@ const FoodCard = ({ foodItem, onQuantityChange }) => {
     
     <p className="text-xl font-bold text-gray-800 ">Total: <span className="text-green-600">${quantity * foodItem.price}</span></p>
   </div>
-  </div>
+  </div> 
   );
 };
 

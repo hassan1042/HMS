@@ -27,10 +27,10 @@ const ParkingRegistration = () => {
   };
 
   return (
-    <form onSubmit={handleAddParkingSpot} className="parking-registration-form flex justify-center items-center flex-wrap space-x-4">
-      <input className= {inputStyles} type="text" placeholder="Parking Spot Name" value={name} onChange={(e) => setName(e.target.value)} required />
-      <input className= {inputStyles} type="text" placeholder="Description" value={category} onChange={(e) => setCategory(e.target.value)} required />
-      <input className= {inputStyles} type="number" placeholder="Rate" value={rate} onChange={(e) => setRate(e.target.value)} required />
+    <form onSubmit={handleAddParkingSpot} className="parking-registration-form flex justify-center items-center flex-wrap space-x-4 max-md:space-y-3">
+      <input className={`${inputStyles} max-md:flex-1`} type="text" placeholder="Parking Spot Name" value={name} onChange={(e) => setName(e.target.value)} required />
+      <input className={`${inputStyles} max-md:flex-1`} type="text" placeholder="Description" value={category} onChange={(e) => setCategory(e.target.value)} required />
+      <input className={`${inputStyles} max-md:flex-1`} type="number" placeholder="Rate" value={rate} onChange={(e) => setRate(e.target.value)} required />
       <label>
         <input type="checkbox" checked={isAvailable} onChange={(e) => setIsAvailable(e.target.checked)} />
         Available

@@ -9,7 +9,9 @@ function Halls({bookingFields, bookings, activeTab, }) {
         };
       
   return (
-    <table className="w-full border-collapse border border-gray-200 text-center">
+    <div className="w-full overflow-x-auto element">
+
+    <table className="w-full border-collapse border border-gray-200 text-center capitalize">
             <thead>
               <tr>
                 {bookingFields[activeTab].map((field) => (
@@ -21,7 +23,7 @@ function Halls({bookingFields, bookings, activeTab, }) {
               </tr>
             </thead>
             <tbody
-            className='w-full'
+            className='w-full max-sm:text-sm'
             >
               {bookings.map((booking, index) => (
                 <tr className='w-full' key={index}>
@@ -46,6 +48,7 @@ function Halls({bookingFields, bookings, activeTab, }) {
               ))}
             </tbody>
           </table>
+          </div>
   )
 }
 

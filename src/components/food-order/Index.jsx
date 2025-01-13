@@ -1,29 +1,34 @@
-// src/pages/FoodOrder.js
+import React, { useEffect, useState } from "react";
+import { saveFoodOrder } from "../../services/foodService";
+import FoodCard from "./FoodCard";
+import { auth } from "../../firebase/Firebase";
+import { fetchFoodItems } from "../../services/foodRegService";
+import { Timestamp } from "firebase/firestore";
+import Loader from "../common/loader/Loader";
+import Tabs from "./Tabs";
+import BookingForm from "./BookingForm";
 
-import React, { useEffect, useState } from 'react';
-import { saveFoodOrder } from '../../services/foodService';
-import FoodCard from './FoodCard';
-import { auth } from '../../firebase/Firebase';
-import { fetchFoodItems } from '../../services/foodRegService';
-import { inputStyles } from '../registrations/FoodRegistration';
-import { Timestamp } from 'firebase/firestore';
-
-
-
-const categories = ['All', 'Full Course', 'Lunch', 'Breakfast',];
+const categories = ["All", "Full Course", "Lunch", "Breakfast"];
 
 const FoodOrderMain = () => {
-  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedCategory, setSelectedCategory] = useState("All");
   const [order, setOrder] = useState({});
-  const [formData, setFormData] = useState({ name: '', contact: '', address: '' });
+  const [formData, setFormData] = useState({
+    name: "",
+    contact: "",
+    address: "",
+  });
   const [foodItems, setFoodItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    const fetchAllFoodOrders = async () =>{
+    const fetchAllFoodOrders = async () => {
       const foodOreders = await fetchFoodItems();
       setFoodItems(foodOreders);
-    }
+      setLoading(false);
+    };
     fetchAllFoodOrders();
-}, []);
+  }, []);
 
   const handleCategoryChange = (category) => setSelectedCategory(category);
 
@@ -35,11 +40,9 @@ const FoodOrderMain = () => {
   };
 
   const handleSubmitOrder = async () => {
-   
-
-    const items = Object.values(order).filter(item => item.quantity > 0);
+    const items = Object.values(order).filter((item) => item.quantity > 0);
     if (items.length === 0) {
-      alert('Please add items to your order.');
+      alert("Please add items to your order.");
       return;
     }
 
@@ -49,66 +52,75 @@ const FoodOrderMain = () => {
       contact: formData.contact,
       address: formData.address,
       items,
-      status:"pending",
-          applyDate: Timestamp.fromDate(new Date()),
-      
+      status: "pending",
+      applyDate: Timestamp.fromDate(new Date()),
     };
-
-    await saveFoodOrder(orderData);
-    alert('Order placed successfully!');
+    if (
+      formData.name.trim() &&
+      formData.address.trim() &&
+      formData.contact.trim()
+    ) {
+      try {
+        await saveFoodOrder(orderData);
+        alert("Order placed successfully!");
+        setFormData({
+          name: "",
+          contact: "",
+          address: "",
+        });
+      } catch (error) {
+        console.error("Error placing the order:", error);
+        alert("Something went wrong. Please try again!");
+      }
+    } else {
+      alert("Fill all the details, please!");
+    }
   };
 
-  const filteredItems = selectedCategory === 'All' 
-    ? foodItems 
-    : foodItems.filter(item => item.category === selectedCategory);
+  const filteredItems =
+    selectedCategory === "All"
+      ? foodItems
+      : foodItems.filter((item) => item.category === selectedCategory);
 
-  return (
+  return loading ? (
+    <Loader msg={"Fetching Food Items"} />
+  ) : (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Food Order</h1>
-      <div className="mb-4">
-        {categories.map(category => (
-          <button
-            key={category}
-            onClick={() => handleCategoryChange(category)}
-            className={`px-4 py-2 mr-2 rounded-xl shadow-lg ${selectedCategory === category ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
-          >
-            {category}
-          </button>
-        ))}
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {filteredItems.map(foodItem => (
-          <FoodCard key={foodItem.id} foodItem={foodItem} onQuantityChange={handleQuantityChange} />
-        ))}
-      </div>
-    <div className='flex flex-col justify-start  items-start'>
-    {Object.values(order).some(item => item.quantity > 0) && (
-        <div className="mt-6 p-4 border rounded-lg shadow-md w-fit ">
-          <h2 className="text-xl font-bold mb-2">Order Details</h2>
-          <div className="mb-2">
-            <label>Name:</label>
-            <input type="text" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} className={`border p-1 w-full ${inputStyles}`} />
-          </div>
-          <div className="mb-2">
-            <label>Contact:</label>
-            <input type="text" value={formData.contact} onChange={(e) => setFormData({ ...formData, contact: e.target.value })} className={`border p-1 w-full ${inputStyles}`} />
-          </div>
-          <div className="mb-2">
-            <label>Address:</label>
-            <input type="text" value={formData.address} onChange={(e) => setFormData({ ...formData, address: e.target.value })} className={`border p-1 w-full ${inputStyles}`} />
-          </div>
-          <button onClick={handleSubmitOrder} className="mt-4 px-4 py-2 bg-green-500 hover:bg-green-800 transition-all duration-200 text-white rounded">Place Order</button>
+      <h1 className="text-2xl lg:text-3xl text-center font-bold mb-4">
+        Food Order
+      </h1>
+      <Tabs
+        categories={categories}
+        handleCategoryChange={handleCategoryChange}
+        selectedCategory={selectedCategory}
+      />
+      {foodItems.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {filteredItems && filteredItems.length > 0 ? (
+            filteredItems.map((foodItem) => (
+              <FoodCard
+                key={foodItem.id}
+                foodItem={foodItem}
+                onQuantityChange={handleQuantityChange}
+              />
+            ))
+          ) : (
+            <p className="text-center text-gray-600 text-lg lg:text-xl">
+              No Items Found in this Category try Choosing Something else please
+            </p>
+          )}
         </div>
+      ) : (
+        <div>No items Found</div>
       )}
-    </div>
+      <BookingForm
+        order={order}
+        formData={formData}
+        setFormData={setFormData}
+        handleSubmitOrder={handleSubmitOrder}
+      />
     </div>
   );
 };
 
 export default FoodOrderMain;
-
-
-
-
-
-

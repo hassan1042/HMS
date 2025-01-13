@@ -31,11 +31,11 @@ const RoomRegistration = () => {
   };
 
   return (
-    <form onSubmit={handleAddRoom} className="room-registration-form flex justify-center items-center space-x-4 flex-wrap">
-      <input className={inputStyles} type="text" placeholder="Room Name" value={name} onChange={(e) => setName(e.target.value)} required />
-      <input className={inputStyles} type="number" placeholder="Price Per Day" value={price} onChange={(e) => setPrice(e.target.value)} required />
-      <input className={inputStyles} type="number" placeholder="No.of Beds" value={beds} onChange={(e) => setBeds(e.target.value)} required />
-      <textarea rows={1} className={` ${inputStyles} `} placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} required />
+    <form onSubmit={handleAddRoom} className="max-md:space-y-3 flex justify-center items-center space-x-4 flex-wrap">
+      <input className={`${inputStyles} max-md:flex-1`} type="text" placeholder="Room Name" value={name} onChange={(e) => setName(e.target.value)} required />
+      <input className={`${inputStyles} max-md:flex-1`} type="number" placeholder="Price Per Day" value={price} onChange={(e) => setPrice(e.target.value)} required />
+      <input className={`${inputStyles} max-md:flex-1`} type="number" placeholder="No.of Beds" value={beds} onChange={(e) => setBeds(e.target.value)} required />
+      <textarea rows={1} className={` ${inputStyles} max-md:flex-1 `} placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} required />
       <input type="file" onChange={(e) => setImage(e.target.files[0])} required />
       {/* <button type="submit">Add Room</button> */}
       <SubmitButton callToAction={loading ? 'Adding Room...' : 'Add Room'} />

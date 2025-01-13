@@ -27,7 +27,7 @@ const RegistrationTabs = () => {
 
   return (
     <div className="admin-dashboard">
-      <div className="tabs flex justify-center items-center mb-5 space-x-4 flex-wrap">
+      <div className="tabs flex justify-center items-center mb-5 space-x-4 flex-wrap max-md:space-y-3">
         {['Food', 'Rental', 'Parking', 'Hall', 'Room'].map(tab => (
           <button 
           key={tab}

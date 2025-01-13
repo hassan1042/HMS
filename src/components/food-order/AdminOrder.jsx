@@ -3,10 +3,13 @@
 import React, { useEffect, useState } from 'react';
 import { getFoodOrders, updateOrderStatus } from '../../services/orderService';
 import { sendNotification } from '../../services/foodService';
+import Loader from '../common/loader/Loader';
 
 const AdminOrders = () => {
   const [orders, setOrders] = useState([]);
   const [checkPendingOrdersLength, setPendingOrdersLength] = useState([]);
+      const[loading, setLoading] = useState(true);
+  
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -19,12 +22,13 @@ const AdminOrders = () => {
      return eachOrder.status === "pending" 
     })
     setPendingOrdersLength(pendingOrders);
+    setLoading(false);
     }
     fetchOrders();
     checkPendingOrders();
   }, []);
 
-  const handleStatusChange = async (orderId, userId, newStatus, orderedItems, userName) => {
+  const handleStatusChange = async (orderId, userId, newStatus, orderedItems, name) => {
     await updateOrderStatus(orderId, newStatus);
 
     const notificationMessage = {
@@ -33,7 +37,7 @@ const AdminOrders = () => {
       delivered: 'Your order has been delivered!',
     };
 
-    await sendNotification(userId, notificationMessage[newStatus], orderedItems, userName );
+    await sendNotification(userId, notificationMessage[newStatus], orderedItems, name );
     setOrders((prevOrders) =>
       prevOrders.map((order) =>
         order.id === orderId ? { ...order, status: newStatus, } : order
@@ -42,8 +46,8 @@ const AdminOrders = () => {
   };
 
   return (
+    loading ? <Loader msg={'Fetching Food Notifications'}/> : 
     <div className="">
-      <h1 className="text-2xl font-bold mb-4">Manage Food Orders</h1>
     {
       <div className="space-y-6 p-4 flex justify-between items-center flex-wrap">
       {orders.map((order) => (
@@ -52,7 +56,7 @@ const AdminOrders = () => {
             key={order.id}
             className="relative p-5 bg-white border-l-4 rounded-lg shadow-lg transition transform hover:scale-105 hover:shadow-2xl border-blue-500"
           >
-            <h2 className="text-xl font-bold text-gray-800 mb-2">Order for {order.userName}</h2>
+            <h2 className="text-xl font-bold text-gray-800 mb-2">Order for {order.name}</h2>
             <p className="text-gray-600">Contact: <span className="text-gray-800 font-medium">{order.contact}</span></p>
             <p className="text-gray-600">Address: <span className="text-gray-800 font-medium">{order.address}</span></p>
             <p className="text-gray-600">Status: <span className="text-blue-600 font-semibold capitalize">{order.status}</span></p>
@@ -67,13 +71,13 @@ const AdminOrders = () => {
               {order.status === 'pending' && (
                 <>
                   <button
-                    onClick={() => handleStatusChange(order.id, order.userId, 'accepted', order.items, order.userName)}
+                    onClick={() => handleStatusChange(order.id, order.userId, 'accepted', order.items, order.name)}
                     className="px-4 py-2 bg-green-500 text-white font-semibold rounded-full transition transform hover:bg-green-600 hover:scale-110 focus:ring focus:ring-green-200"
                   >
                     Accept
                   </button>
                   <button
-                    onClick={() => handleStatusChange(order.id, order.userId, 'rejected', order.items, order.userName)}
+                    onClick={() => handleStatusChange(order.id, order.userId, 'rejected', order.items, order.name)}
                     className="px-4 py-2 bg-red-500 text-white font-semibold rounded-full transition transform hover:bg-red-600 hover:scale-110 focus:ring focus:ring-red-200"
                   >
                     Reject
@@ -82,7 +86,7 @@ const AdminOrders = () => {
               )}
               {order.status === 'accepted' && (
                 <button
-                  onClick={() => handleStatusChange(order.id, order.userId, 'delivered', order.items, order.userName)}
+                  onClick={() => handleStatusChange(order.id, order.userId, 'delivered', order.items, order.name)}
                   className="px-4 py-2 bg-blue-500 text-white font-semibold rounded-full transition transform hover:bg-blue-600 hover:scale-110 focus:ring focus:ring-blue-200"
                 >
                   Mark as Delivered

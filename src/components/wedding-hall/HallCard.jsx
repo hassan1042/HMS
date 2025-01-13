@@ -4,7 +4,7 @@ const HallCard = ({ hall }) => {
   const { name, description, pp, offers, imageUrl } = hall;
 
   return (
-    <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
+    <div className="mx-auto w-full bg-white rounded-xl shadow-md overflow-hidden ">
       <div>
         <img
           src={imageUrl}
@@ -32,9 +32,7 @@ const HallCard = ({ hall }) => {
                   <strong>Price:</strong>{' '}
                   <span className="text-green-600">${offer.price}</span>
                 </p>
-                {/* <p className="text-gray-600 mt-1">
-                  <strong>Valid Until:</strong> {offer.validity}
-                </p> */}
+            
               </li>
             ))}
           </ul>

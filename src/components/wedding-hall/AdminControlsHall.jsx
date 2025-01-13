@@ -1,16 +1,20 @@
 // src/pages/AdminWeddingHallOrders.js
 
 import React, { useEffect, useState } from 'react';
-import { collection, updateDoc, doc, onSnapshot, addDoc, Timestamp } from 'firebase/firestore';
+import { collection, updateDoc, doc, onSnapshot, addDoc,  } from 'firebase/firestore';
 import { db } from '../../firebase/Firebase';
+import Loader from '../common/loader/Loader';
 
 const AdminControlsHall = () => {
   const [bookings, setBookings] = useState([]);
+  const[loading, setLoading] = useState(true);
+
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, 'wedding-hall-bookings'), (snapshot) => {
       const bookingsData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       setBookings(bookingsData);
+      setLoading(false);
     });
     return unsubscribe;
   }, []);
@@ -29,9 +33,8 @@ const AdminControlsHall = () => {
   };
 
   return (
-    <div className="container mx-auto p-4 ">
-    <h2 className="text-3xl font-extrabold mb-6 text-center text-gray-800">Manage Wedding Hall Bookings</h2>
-    
+    loading ? <Loader msg={"Fetching Halls Notfications"}/>  :
+    <div className="container mx-auto p-4 ">    
     <div className="space-y-6 flex flex-wrap justify-between items-center">
       {bookings.map(booking => (
         booking.status !== 'Rejected' && booking.status !== 'Delivered' && (
@@ -39,11 +42,12 @@ const AdminControlsHall = () => {
             key={booking.id}
             className="p-6 bg-white border border-gray-200 shadow-lg rounded-lg transform transition duration-300 hover:shadow-xl hover:scale-105"
           >
+            <h3 className="text-xl font-semibold text-gray-800 mb-3">Booking from <span className='italic capitalize'>{booking.name}</span></h3>
             <p className="text-xl font-semibold text-gray-700 mb-1">
-              <strong>Hall:</strong> {booking.hallName}
+               {booking.hallName}
             </p>
             <p className="text-gray-600">
-              <strong>User:</strong> {booking.name} - {booking.contact}
+              <strong>Contact:</strong>  {booking.contact}
             </p>
             <p className="text-gray-600 mb-3">
               <strong>Status:</strong> {booking.status}

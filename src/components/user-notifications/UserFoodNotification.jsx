@@ -1,9 +1,10 @@
 import React from 'react'
+import Loader from '../common/loader/Loader'
 
-function UserFoodNotification({notifications, handleDelete}) {
+function UserFoodNotification({notifications, handleDelete, loading}) {
   return (
     <div className="space-y-6 mx-auto p-4 flex justify-between items-center flex-wrap">
-    {notifications.length > 0 ? (
+    {loading.food ? <Loader msg={"Fetching Food Updates for you"} /> : notifications.length > 0 ? (
       <div className="space-y-6">
         {notifications.map(notification => (
           <div

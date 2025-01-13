@@ -1,11 +1,15 @@
 import React from 'react'
+import Loader from '../common/loader/Loader'
 
 
-function UserRentalNotifications({rentalVehicles, handleDelete}) {
+function UserRentalNotifications({rentalVehicles, handleDelete, loading}) {
  
   return (
     <div className="container mx-auto p-4 flex justify-between items-center flex-wrap">
-    {rentalVehicles.length === 0 ? (
+    {
+    loading.rental ? <Loader msg={"Fetching rental Updates for you"} /> : 
+      
+      rentalVehicles.length === 0 ? (
       <p className="text-gray-500 italic">No notifications yet (Rental)</p>
     ) : (
       rentalVehicles.map((vehicleNotification, i) => (
