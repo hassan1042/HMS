@@ -1,27 +1,50 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { inputStyles } from '../../registrations/FoodRegistration';
+// import { newDate } from 'react-datepicker/dist/date_utils';
 
 function BookingForm({handleBooking, name, setName, contact, setContact, cnic, setCnic, startDate, setStartDate, endDate, setEndDate, totalRate,}) {
+  const [today, setToday] = useState("");
+  useEffect(() => {
+    const currentDate = new Date();
+    const formattedDate = currentDate.toISOString().split("T")[0]; 
+    setToday(formattedDate);
+  }, []);
   return (
     <form onSubmit={handleBooking} className="mt-4  flex flex-col justify-center items-center w-full">
     <input
       type="text"
       value={name}
-      onChange={(e) => setName(e.target.value)}
+      onChange={(e) => {
+      const value = e.target.value;
+      if(value.length <=15){
+      setName(e.target.value);
+      }
+      }}
       placeholder="Name"
       className={`w-full p-2 mb-2 border rounded ${inputStyles}`}
     />
     <input
-      type="text"
+      type="number"
       value={contact}
-      onChange={(e) => setContact(e.target.value)}
+      onChange={(e) => {
+        const value = e.target.value;
+        if(value.length <= 11){
+       setContact(e.target.value);
+        }
+      }     
+       }
       placeholder="Contact Number"
       className={`w-full p-2 mb-2 border rounded ${inputStyles}`}
     />
      <input
       type="number"
       value={cnic}
-      onChange={(e) => setCnic(e.target.value)}
+      onChange={(e) => {
+        const value = e.target.value;
+      if(value.length <= 13){
+      setCnic(e.target.value)}
+      }
+      }     
       placeholder="Your Cnic no hyphens(-)"
       className={`w-full p-2 mb-2 border rounded ${inputStyles}`}
     />
@@ -34,6 +57,7 @@ function BookingForm({handleBooking, name, setName, contact, setContact, cnic, s
       }}
       className={`w-full p-2 mb-2 border rounded ${inputStyles} `}
       max={endDate}
+      min={today}
     />
     <input
       type="date"

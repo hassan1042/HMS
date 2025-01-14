@@ -20,7 +20,6 @@ const RoomsSection = () => {
     if (auth.currentUser) {
       setShowForm(!showForm);
       setSelRoom(room);
-      console.log(selRoom);
     } else {
       alert("Please log in to book a room");
     }

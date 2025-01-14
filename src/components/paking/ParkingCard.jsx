@@ -8,6 +8,7 @@ const ParkingCard = ({ vehicle }) => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [totalRate, setTotalRate] = useState(0);
+  const [today , setToday] = useState("");
   const { currentUser } = useAuth();
   const [isAvailable, setIsAvailable] = useState(vehicle.isAvailable);
 
@@ -21,6 +22,12 @@ const ParkingCard = ({ vehicle }) => {
       setTotalRate(rate);
     }
   }, [startDate, endDate, vehicle.rate]);
+
+   useEffect(() => {
+      const currentDate = new Date();
+      const formattedDate = currentDate.toISOString().split("T")[0]; 
+      setToday(formattedDate);
+    }, []);
 
   // Toggle Availability
   const handleToggleAvailability = async () => {
@@ -59,6 +66,7 @@ const ParkingCard = ({ vehicle }) => {
             onChange={(e) => setStartDate(e.target.value)}
             className="border rounded p-1 transition duration-200 focus:ring-2 focus:ring-blue-300"
             max={endDate}
+            min={today}
           />
         </div>
         <div className="flex justify-between items-center">
