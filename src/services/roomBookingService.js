@@ -43,3 +43,8 @@ export const getRoomBookingsNotification = async () => {
   const roomSnapshot = await getDocs(roomsCollection);
   return roomSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 };
+
+export const updateRoomAvailability = async (roomId, isAvailable) => {
+  const roomRef = doc(db, "rooms", roomId);
+  await updateDoc(roomRef, { available: isAvailable });
+};

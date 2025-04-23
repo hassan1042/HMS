@@ -37,18 +37,29 @@ const Auth = () => {
         {isLogin ? "Login" : "Sign Up"}
       </h2>
       <form className="shadow-lg p-2 lg:p-4" onSubmit={handleAuth}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => {
-            const value = e.target.value;
-            if (value.length <= 20) {
-              setEmail(e.target.value);
-            }
-          }}
-          className="w-full p-2 mb-3 border rounded focus:outline-yellow-600"
-        />
+      <input
+  type="email"
+  placeholder="Email"
+  value={email}
+  onChange={(e) => {
+    const value = e.target.value;
+
+    // Count occurrences of "@" and "."
+    const atCount = (value.match(/@/g) || []).length;
+    const dotCount = (value.match(/\./g) || []).length;
+
+    // Allow only letters, numbers, @, and . with at most one of @ and one of .
+    const isValid = /^[a-zA-Z0-9@.]*$/.test(value) && atCount <= 1 && dotCount <= 1;
+
+    if (value.length <= 30 && isValid) {
+      setEmail(value);
+    }
+  }}
+  className="w-full p-2 mb-3 border rounded focus:outline-yellow-600"
+/>
+
+
+
         <input
           type="password"
           placeholder="Password"
